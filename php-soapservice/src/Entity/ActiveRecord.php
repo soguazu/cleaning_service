@@ -40,71 +40,71 @@ class ActiveRecord implements JsonSerializable
 
     public function save()
     {
-        $fields = $this->getPublicVars();
-        unset($fields['id']);
-        $db_fields = [];
+        // $fields = $this->getPublicVars();
+        // unset($fields['id']);
+        // $db_fields = [];
 
-        if ($this->id) {
-            unset($fields['created_at']);
-            $this->updated_at = new DateTime();
-        }
+        // if ($this->id) {
+            // unset($fields['created_at']);
+            // $this->updated_at = new DateTime();
+        // }
 
-        foreach ($fields as $field_name => $value) {
-            $value_type = gettype($value);
-            switch ($value_type) {
-                case 'NULL':
-                    $db_fields[$field_name] = 'NULL';
-                    break;
-                case 'boolean':
-                case 'integer':
-                case 'string':
-                case 'double':
-                    $db_fields[$field_name] = $value;
-                    break;
-                case 'object':
-                    switch (get_class($value)) {
-                        case 'DateTime':
-                            $db_fields[$field_name] = $value->format('Y-m-d H:i:s');
-                            break;
-                        default:
-                            throw (new NotImplementedException('Please handle this object type'));
-                            break;
-                    }
-                    break;
-                default:
-                    throw (new NotImplementedException('Please handle this type'));
-                    break;
-            }
-        }
+        // foreach ($fields as $field_name => $value) {
+            // $value_type = gettype($value);
+            // switch ($value_type) {
+                // case 'NULL':
+                    // $db_fields[$field_name] = 'NULL';
+                    // break;
+                // case 'boolean':
+                // case 'integer':
+                // case 'string':
+                // case 'double':
+                    // $db_fields[$field_name] = $value;
+                    // break;
+                // case 'object':
+                    // switch (get_class($value)) {
+                        // case 'DateTime':
+                            // $db_fields[$field_name] = $value->format('Y-m-d H:i:s');
+                            // break;
+                        // default:
+                            // throw (new NotImplementedException('Please handle this object type'));
+                            // break;
+                    // }
+                    // break;
+                // default:
+                    // throw (new NotImplementedException('Please handle this type'));
+                    // break;
+            // }
+        // }
+// 
+        // if (is_null($this->id)) {
+            // $sql = 'INSERT INTO ' . static::TABLE_NAME;
+            // $columns = '(' . implode(', ', array_keys($db_fields)) . ')';
+            // $sql .= " $columns";
 
-        if (is_null($this->id)) {
-            $sql = 'INSERT INTO ' . static::TABLE_NAME;
-            $columns = '(' . implode(', ', array_keys($db_fields)) . ')';
-            $sql .= " $columns";
+            // $values = '(' . sprintf('"%s"', implode('","', array_values($db_fields))) . ')';
+            // $sql .= " VALUES $values;";
 
-            $values = '(' . sprintf('"%s"', implode('","', array_values($db_fields))) . ')';
-            $sql .= " VALUES $values;";
+            // $connection = $this->database->getConnection();
+            // $connection->exec($sql);
 
-            $connection = $this->database->getConnection();
-            $connection->exec($sql);
+            // $this->id = $connection->lastInsertId();
 
-            $this->id = $connection->lastInsertId();
+            // return true;
+        // }
 
-            return true;
-        }
+        // $sql = 'UPDATE ' . static::TABLE_NAME;
+        // $sql .= ' SET ';
 
-        $sql = 'UPDATE ' . static::TABLE_NAME;
-        $sql .= ' SET ';
+        // $key_value = [];
+        // foreach ($db_fields as $field => $value) {
+            // $key_value[] = "$field=\"$value\"";
+        // }
+        // $sql .= implode(', ', $key_value);
+        // $sql .= ' WHERE id = ' . $this->id . ';';
 
-        $key_value = [];
-        foreach ($db_fields as $field => $value) {
-            $key_value[] = "$field=\"$value\"";
-        }
-        $sql .= implode(', ', $key_value);
-        $sql .= ' WHERE id = ' . $this->id . ';';
-
-        $connection = $this->database->getConnection();
-        $connection->exec($sql);
+        // $connection = $this->database->getConnection();
+        // $connection->exec($sql);
 
         return true;
     }
