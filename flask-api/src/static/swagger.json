@@ -20,6 +20,22 @@
     {
       "name": "Company",
       "description": "API endpoints for requesting, creating and return list of registered companies"
+    },
+    {
+      "name": "User",
+      "description": "API endpoints for requesting, creating and return list of users"
+    },
+    {
+      "name": "Customer",
+      "description": "API endpoints for requesting, creating and return list of customers"
+    },
+    {
+      "name": "Employee",
+      "description": "API endpoints for requesting, creating and return list of employees"
+    },
+    {
+      "name": "Holiday",
+      "description": "API endpoints for requesting, creating and return list of holidays"
     }
   ],
   "paths": {
@@ -55,7 +71,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/companyRequest"
+                  "$ref": "#/components/schemas/Company"
                 }
               }
             }
@@ -76,7 +92,7 @@
                   "type": "array",
                   "items": {
                     "type": "object",
-                    "$ref": "#/components/schemas/companyRequest"
+                    "$ref": "#/components/schemas/Company"
                   }
                 }
               }
@@ -92,7 +108,270 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/companyPost"
+                "$ref": "#/components/schemas/Company"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Returns a registered user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Unique ID for a specific user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Returns list of registered users",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["User"],
+        "summary": "Create a user",
+        "requestBody": {
+          "description": "Payload for creating a user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customer/{id}": {
+      "get": {
+        "tags": ["Customer"],
+        "summary": "Returns a registered customer",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Unique ID for a specific customer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customer": {
+      "get": {
+        "tags": ["Customer"],
+        "summary": "Returns list of registered customer",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/Customer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Customer"],
+        "summary": "Create a customer",
+        "requestBody": {
+          "description": "Payload for creating a customer",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Customer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/employee/{id}": {
+      "get": {
+        "tags": ["Employee"],
+        "summary": "Returns a registered employee",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Unique ID for a specific employee"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employee"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/employee": {
+      "get": {
+        "tags": ["Employee"],
+        "summary": "Returns list of registered employee",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/Employee"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Employee"],
+        "summary": "Create a employee",
+        "requestBody": {
+          "description": "Payload for creating a employee",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Employee"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/holiday": {
+      "post": {
+        "tags": ["Holiday"],
+        "summary": "Create a Holiday",
+        "requestBody": {
+          "description": "Payload for creating a holiday",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Holiday"
               }
             }
           }
@@ -122,7 +401,7 @@
           }
         }
       },
-      "companyRequest": {
+      "Company": {
         "type": "object",
         "properties": {
           "name": {
@@ -148,29 +427,34 @@
           "tax_rate": {
             "type": "string",
             "format": "float"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
           }
         }
       },
-      "companyPost": {
+      "User": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string",
-            "format": "string"
-          },
           "email": {
             "type": "string",
             "format": "email"
           },
-          "logo_url": {
+          "avatar_url": {
+            "type": "string",
+            "format": "string"
+          },
+          "password": {
+            "type": "string",
+            "format": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["ADMIN", "EMPLOYEE", "CUSTOMER"]
+          }
+        }
+      },
+      "Customer": {
+        "type": "object",
+        "properties": {
+          "name": {
             "type": "string",
             "format": "string"
           },
@@ -178,13 +462,62 @@
             "type": "string",
             "format": "string"
           },
-          "country": {
+          "phone": {
             "type": "string",
             "format": "string"
           },
-          "tax_rate": {
+          "user_id": {
+            "type": "number",
+            "format": "integer"
+          }
+        }
+      },
+      "Employee": {
+        "type": "object",
+        "properties": {
+          "company_id": {
+            "type": "number",
+            "format": "integer"
+          },
+          "user_id": {
+            "type": "number",
+            "format": "integer"
+          },
+          "first_name": {
+            "type": "string",
+            "format": "string"
+          },
+          "last_name": {
+            "type": "string",
+            "format": "string"
+          },
+          "hourly_rate": {
             "type": "number",
             "format": "double"
+          }
+        }
+      },
+      "Holiday": {
+        "type": "object",
+        "properties": {
+          "company_id": {
+            "type": "number",
+            "format": "integer"
+          },
+          "employee_id": {
+            "type": "number",
+            "format": "integer"
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "approved": {
+            "type": "number"
           }
         }
       }

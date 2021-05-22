@@ -158,22 +158,8 @@ class ActiveRecord implements JsonSerializable
         $conn = $db->getConnection();
         $stmt = $conn->query($sql);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
-        $record = $stmt->fetch();
-        if ($record) {
-            $entity_class = get_called_class();
-            $entity = new $entity_class();
-            $fields = get_object_vars($record);
-            foreach ($fields as $field_name => $value) {
-                if (DateTime::createFromFormat('Y-m-d H:i:s', $value) !== false) {
-                    $entity->$field_name = new DateTime($value);
-                    continue;
-                }
-                $entity->$field_name = $value;
-            }
-            return $entity;
-        }
-        throw (new RecordNotFoundException("Can't find row with ID $id in table " .
-        static::TABLE_NAME));
+        $records = $stmt->fetchAll();
+        return $records;
     }
 
     // public function destroy()

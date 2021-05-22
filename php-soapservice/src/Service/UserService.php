@@ -2,21 +2,24 @@
 
 namespace Application\Service;
 
-use Application\Entity\Customer;
+use Application\Entity\User;
 use Application\Entity\InternalServerException;
 use Application\Exception\NotImplementedException;
 use Application\Exception\RecordNotFoundException;
 
-class CustomerService extends BaseService
+class UserService extends BaseService
 {
-    public function createCustomer()
+
+    public function createUser()
     {
         try {
-            $customer = new Customer();
-            $ok = $customer->save($this->params);
-            
-            if ($ok) return "Created company successfully";
-            
+            $user = new User();
+            $this->params['password'] = password_hash($this->params['password'], PASSWORD_DEFAULT);
+
+            $ok = $user->save($this->params);
+
+            if ($ok) return "Created user successfully";
+
             http_response_code(ResponseCode::BAD_REQUEST);
             die("Bad request");
         } catch (InternalServerException $e) {
@@ -25,19 +28,18 @@ class CustomerService extends BaseService
         }
     }
 
-    public function getCustomerById()
+    public function getUserById()
     {
         try {
-            
-            return Customer::find($this->params['id']);
+            return User::find($this->params['id']);
         } catch (RecordNotFoundException $e) {
             http_response_code(ResponseCode::NOT_FOUND);
             die($e->getMessage());
         }
     }
-    public function getAllCustomers()
+
+    public function getAllUsers()
     {
-        return Customer::findAll();
+        return User::findAll();
     }
-    
 }

@@ -1,5 +1,5 @@
 from src import (app, request, jsonify, InterviewSoapClient, 
-                 CompanySchema, ValidationError)
+                 CompanySchema, ValidationError, json)
 
 
 @app.route("/company/<id>", methods=['GET', 'PATCH', 'DELETE'])
@@ -12,7 +12,7 @@ def company(id):
             args={'id': id}
         )
 
-        return res
+        return json.loads(res)
     
 
     
@@ -27,7 +27,7 @@ def companies():
             action='getAllCompanies'
         )
 
-        return res
+        return json.loads(res)
     
     body = request.get_json()
     
@@ -41,10 +41,10 @@ def companies():
             action='createCompany',
             args=company_dict
         )
-        return res
+        return json.loads(res)
         
     except ValidationError as err:
-      print(err.message)
+      print(err)
     
     
     
