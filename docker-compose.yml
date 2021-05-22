@@ -1,0 +1,41 @@
+version: '3.7'
+services:
+  app:
+    build:
+      context: ./php-soapservice
+    command: php -S 0.0.0.0:7000
+    volumes:
+      - ./php-soapservice:/app
+      - composer-vendor:/app/vendor
+    env_file:
+      - ./php-soapservice/.env
+    depends_on:
+      - database
+    ports:
+      - 7000:7000
+
+  database:
+    image: mysql:5.7
+    env_file:
+      - ./php-soapservice/.env
+    ports:
+      - '9906:3306'
+    volumes:
+      - my-datavolume:/var/lib/mysql
+
+  # api:
+  # build:
+  # context: ./flask-api
+  # volumes:
+  # - ./flask-api:/apps
+  # env_file:
+  # - ./flask-api/.env
+  # ports:
+  # - 5000:5000
+  # depends_on:
+  # - app
+  # - database
+
+volumes:
+  my-datavolume:
+  composer-vendor:

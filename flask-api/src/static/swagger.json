@@ -1,0 +1,193 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Cleaning service",
+    "version": "1.0.0",
+    "title": "Cleaning service rest api documentation",
+    "contact": { "email": "info@10hourslab.com" },
+    "license": { "name": "MIT", "url": "https://opensource.org/licenses/MIT" }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Home",
+      "description": "Welcome to cleaning service home page"
+    },
+    {
+      "name": "Company",
+      "description": "API endpoints for requesting, creating and return list of registered companies"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": ["Home"],
+        "summary": "Returns Greetings",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/company/{id}": {
+      "get": {
+        "tags": ["Company"],
+        "summary": "Returns a registered companies",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Unique ID for a specific company"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/companyRequest"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/company": {
+      "get": {
+        "tags": ["Company"],
+        "summary": "Returns list of registered companies",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/companyRequest"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Company"],
+        "summary": "Create a company",
+        "requestBody": {
+          "description": "Payload for creating a company",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/companyPost"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "id": {
+        "properties": {
+          "uuid": {
+            "type": "string"
+          }
+        }
+      },
+      "companyRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "format": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "logo_url": {
+            "type": "string",
+            "format": "string"
+          },
+          "address": {
+            "type": "string",
+            "format": "string"
+          },
+          "country": {
+            "type": "string",
+            "format": "string"
+          },
+          "tax_rate": {
+            "type": "string",
+            "format": "float"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "companyPost": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "format": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "logo_url": {
+            "type": "string",
+            "format": "string"
+          },
+          "address": {
+            "type": "string",
+            "format": "string"
+          },
+          "country": {
+            "type": "string",
+            "format": "string"
+          },
+          "tax_rate": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      }
+    }
+  }
+}

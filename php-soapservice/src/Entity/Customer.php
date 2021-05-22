@@ -8,11 +8,11 @@ class Customer extends ActiveRecord
 
     public string $name;
 
-    public string $email;
-
     public string $address;
 
     public string $phone;
+
+    public integer $user_id;
     
 
     public function jsonSerialize()
@@ -20,9 +20,9 @@ class Customer extends ActiveRecord
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'email' => $this->address,
             'phone' => $this->phone,
-            'address' => $this->address
+            'address' => $this->address,
+            'user_id' => $this->user_id
         ];
     }
 }
