@@ -1,4 +1,37 @@
 #!/bin/env php    
 <?php
 
+namespace Application\bin;
+
+use PDO;
+
 echo "Add utility script here\n";
+
+
+// use Application\config\MysqlDBAdapter;
+
+// CREATE DATABASE IF NOT EXISTS cleaning_servic;
+// 
+// USE cleaning_service;
+
+// $dB = new MysqlDBAdapter();
+// 
+// $connection = $dB->getConnection();
+
+$mysql_host = "localhost";
+$mysql_database = "cleaning_service";
+$mysql_user = "admin";
+$mysql_password = "Eb[f6YEwH4d/IX)(";
+# MySQL with PDO_MYSQL  
+$db = new PDO("mysql:host=$mysql_host;dbname=$mysql_database;port=9906", $mysql_user, $mysql_password);
+
+
+$query = file_get_contents("../config/schema.sql");
+
+$stmt = $connection->prepare($query);
+
+if ($stmt->execute()){
+     echo "Success";
+}else{ 
+     echo "Fail";
+}

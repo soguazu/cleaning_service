@@ -18,7 +18,7 @@ class CustomerService extends BaseService
             if ($ok) return "Created company successfully";
             
             http_response_code(ResponseCode::BAD_REQUEST);
-            die("Bad request");
+            
         } catch (InternalServerException $e) {
             http_response_code(ResponseCode::INTERNAL_SERVER);
             die($e->getMessage());

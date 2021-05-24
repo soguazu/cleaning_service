@@ -53,10 +53,10 @@ class ActiveRecord implements JsonSerializable
     {
         $public_data = $this->getPublicVars();
         $fields = array_merge($public_data, $payload);
-        
+
+
         unset($fields['id']);
         $db_fields = [];
-
         if ($this->id) {
             unset($fields['created_at']);
             $this->updated_at = new DateTime();
@@ -90,7 +90,7 @@ class ActiveRecord implements JsonSerializable
             }
         }
 
-        if (is_null($this->id)) {
+        if (is_null($this->id) && is_null($payload['id'])) {
             
             $sql = 'INSERT INTO ' . static::TABLE_NAME;
             $columns = '(' . implode(', ', array_keys($db_fields)) . ')';
@@ -116,7 +116,7 @@ class ActiveRecord implements JsonSerializable
             $key_value[] = "$field=\"$value\"";
         }
         $sql .= implode(', ', $key_value);
-        $sql .= ' WHERE id = ' . $this->id . ';';
+        $sql .= ' WHERE id = ' . $payload['id'] . ';';
 
         $connection = $this->database->getConnection();
         $connection->exec($sql);
@@ -190,5 +190,39 @@ class ActiveRecord implements JsonSerializable
             }
         };
         return $instance->getPublicVars($this);
+    }
+
+    public static function checkEmployeeStatus(object $payload, int $employee_id, $db_conn = null)
+    {
+        $db = $db_conn ?? new MysqlDBAdapter();
+        
+        $sql = 'SELECT E.id FROM ' . static::TABLE_NAME . " E LEFT JOIN work_orders WO ON WO.employee_id=E.id INNER JOIN companies C ON E.company_id=C.id INNER JOIN holidays H
+        ON E.id=H.employee_id WHERE NOT :proposed_start_date BETWEEN H.start_date
+        AND H.end_date AND NOT :proposed_end_date BETWEEN H.start_date AND
+        H.end_date AND NOT E.id IN (SELECT id FROM work_orders WHERE status='ACCEPT' AND
+        employee_id=E.id);";
+        
+        
+        $conn = $db->getConnection();
+        $stmt = $conn->prepare($sql);
+
+        $proposed_start_date = $payload->proposed_start_date->format("%Y-%m-%d %H:%M:%S");
+        $proposed_end_date = $payload->proposed_end_date->format("%Y-%m-%d %H:%M:%S");
+        
+        echo $proposed_start_date;
+
+        $stmt->execute(['proposed_start_date' => $proposed_start_date, 'proposed_end_date' => $proposed_end_date]);
+    
+        
+        $stmt->setFetchMode(PDO::FETCH_OBJ);
+        $rows = $stmt->fetchAll();
+    
+        foreach($rows as $field) {
+            if ($field->id == $employee_id) {
+                return false;
+            }
+        }
+        return true;
+        
     }
 }

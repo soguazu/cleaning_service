@@ -11,4 +11,6 @@ class ResponseCode
     const BAD_REQUEST = 400;
 
     const INTERNAL_SERVER = 500;
+
+    const OK = 200;
 }
