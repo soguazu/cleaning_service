@@ -2,28 +2,35 @@
 
 namespace Application\Service;
 
-use Application\Entity\Holiday;
+use Application\Entity\ServiceCategory;
 use Application\Entity\InternalServerException;
 use Application\Exception\NotImplementedException;
 use Application\Exception\RecordNotFoundException;
 
-class HolidayService extends BaseService
+class ServiceCategoryService extends BaseService
 {
-    public function createHoliday()
+
+
+    public function createServiceCategory()
     {
         try {
-            $holiday = new Holiday();
-            $ok = $holiday->save($this->params);
+            $company = new ServiceCategory();
+            $ok = $company->save($this->params);
 
-            if ($ok) return "Created holiday successfully";
+            if ($ok) return "Created service category successfully";
 
             http_response_code(ResponseCode::BAD_REQUEST);
-           
             
         } catch (InternalServerException $e) {
             http_response_code(ResponseCode::INTERNAL_SERVER);
             die($e->getMessage());
         }
     }
+
     
+
+    public function getAllServiceCategories()
+    {
+        return ServiceCategory::findAll();
+    }
 }

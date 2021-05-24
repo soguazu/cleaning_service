@@ -2,23 +2,22 @@
 
 namespace Application\Service;
 
-use Application\Entity\Employee;
+use Application\Entity\ServiceRequest;
 use Application\Entity\InternalServerException;
 use Application\Exception\NotImplementedException;
 use Application\Exception\RecordNotFoundException;
 
-class EmployeeService extends BaseService
+class ServiceRequestService extends BaseService
 {
-    public function createEmployee()
+    public function createServiceRequest()
     {
         try {
-            $employee = new Employee();
-            $ok = $employee->save($this->params);
-
-            if ($ok) return "Created employee successfully";
-
-            http_response_code(ResponseCode::BAD_REQUEST);
+            $service_request = new ServiceRequest();
+            $ok = $service_request->save($this->params);
             
+            if ($ok) return "Created Service Request successfully";
+            
+            http_response_code(ResponseCode::BAD_REQUEST);
             
         } catch (InternalServerException $e) {
             http_response_code(ResponseCode::INTERNAL_SERVER);
@@ -26,19 +25,19 @@ class EmployeeService extends BaseService
         }
     }
 
-    public function getEmployeeById()
+    public function getServiceRequestById()
     {
         try {
             
-            return Employee::find($this->params['id']);
+            return ServiceRequest::find($this->params['id']);
         } catch (RecordNotFoundException $e) {
             http_response_code(ResponseCode::NOT_FOUND);
             die($e->getMessage());
         }
     }
-    public function getAllEmployees()
+    public function getAllServiceRequests()
     {
-        return Employee::findAll();
+        return ServiceRequest::findAll();
     }
     
 }
