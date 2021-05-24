@@ -36,6 +36,26 @@
     {
       "name": "Holiday",
       "description": "API endpoints for requesting, creating and return list of holidays"
+    },
+    {
+      "name": "Service Category",
+      "description": "API endpoints for requesting, creating and return list of service categories"
+    },
+    {
+      "name": "Service",
+      "description": "API endpoints for requesting, creating and return list of service"
+    },
+    {
+      "name": "Service Rate",
+      "description": "API endpoints for requesting, creating and return list of service rate"
+    },
+    {
+      "name": "Service Request",
+      "description": "API endpoints for requesting, creating and return list of service request"
+    },
+    {
+      "name": "Work Order",
+      "description": "API endpoints for requesting, creating and return list of work order"
     }
   ],
   "paths": {
@@ -109,6 +129,126 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/Company"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/work_order/{id}": {
+      "get": {
+        "tags": ["Work Order"],
+        "summary": "Returns a registered work order",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Unique ID for a specific work order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkOrder"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Work Order"],
+        "summary": "Updates a registered work order",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Unique ID for a specific work order"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": ["ACCEPT", "DONE", "PENDING"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkOrder"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/work_order": {
+      "get": {
+        "tags": ["Work Order"],
+        "summary": "Returns list of registered work orders",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/WorkOrder"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Work Order"],
+        "summary": "Create a Work Order",
+        "requestBody": {
+          "description": "Payload for creating a work order",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkOrder"
               }
             }
           }
@@ -390,6 +530,214 @@
           }
         }
       }
+    },
+    "/service_category": {
+      "get": {
+        "tags": ["Service Category"],
+        "summary": "Returns list of registered service category",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Service Category"],
+        "summary": "Create a service category",
+        "requestBody": {
+          "description": "Payload for creating a service category",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/service": {
+      "get": {
+        "tags": ["Service"],
+        "summary": "Returns list of registered service",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/Service"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Service"],
+        "summary": "Create a service",
+        "requestBody": {
+          "description": "Payload for creating a service",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/Service"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/service_rate": {
+      "get": {
+        "tags": ["Service Rate"],
+        "summary": "Returns list of registered service rate",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/ServiceRate"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Service Rate"],
+        "summary": "Create a service rate",
+        "requestBody": {
+          "description": "Payload for creating a service rate",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/ServiceRate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/service_request": {
+      "get": {
+        "tags": ["Service Request"],
+        "summary": "Returns list of registered service request",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/ServiceRequest"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Service Request"],
+        "summary": "Create a service request",
+        "requestBody": {
+          "description": "Payload for creating a service request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/ServiceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -518,6 +866,118 @@
           },
           "approved": {
             "type": "number"
+          }
+        }
+      },
+      "Service": {
+        "type": "object",
+        "properties": {
+          "company_id": {
+            "type": "number",
+            "format": "integer"
+          },
+          "service_category_id": {
+            "type": "number",
+            "format": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "ServiceRate": {
+        "type": "object",
+        "properties": {
+          "service_id": {
+            "type": "number",
+            "format": "integer"
+          },
+          "unit": {
+            "type": "number",
+            "format": "double"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "duration": {
+            "type": "number",
+            "format": "double"
+          },
+          "supply_markup": {
+            "type": "number",
+            "format": "double"
+          },
+          "overhead_markup": {
+            "type": "number",
+            "format": "double"
+          },
+          "misc_markup": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "ServiceRequest": {
+        "type": "object",
+        "properties": {
+          "service_id": {
+            "type": "number",
+            "format": "integer"
+          },
+          "customer_id": {
+            "type": "number",
+            "format": "integer"
+          },
+          "proposed_start_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "proposed_end_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actual_start_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actual_end_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "adjustment": {
+            "type": "number",
+            "format": "double"
+          },
+          "total": {
+            "type": "number",
+            "format": "double"
+          },
+          "unit": {
+            "type": "string"
+          }
+        }
+      },
+      "WorkOrder": {
+        "type": "object",
+        "properties": {
+          "employee_id": {
+            "type": "number",
+            "format": "integer"
+          },
+          "service_request_id": {
+            "type": "number",
+            "format": "integer"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["ACCEPT", "DONE", "PENDING"]
           }
         }
       }

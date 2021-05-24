@@ -7,6 +7,8 @@ from src.serializers.user import UserSchema
 from src.serializers.customer import CustomerSchema
 from src.serializers.employee import EmployeeSchema
 from src.serializers.holiday import HolidaySchema
+from src.serializers.service import ServiceSchema
+from src.serializers.service_rate import ServiceRateSchema
 
 app = Flask(__name__)
 
@@ -31,3 +33,8 @@ from src import company
 from src import customer
 from src import employee
 from src import holiday
+from src import service_category
+from src import service
+from src import service_rate
+from src import service_request
+from src import work_order
