@@ -12,7 +12,7 @@ class Customer extends ActiveRecord
 
     public string $phone;
 
-    public integer $user_id;
+    public int $user_id;
     
 
     public function jsonSerialize()

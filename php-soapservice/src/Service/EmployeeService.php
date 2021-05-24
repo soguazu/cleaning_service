@@ -2,42 +2,43 @@
 
 namespace Application\Service;
 
-use Application\Entity\Customer;
+use Application\Entity\Employee;
 use Application\Entity\InternalServerException;
 use Application\Exception\NotImplementedException;
 use Application\Exception\RecordNotFoundException;
 
-class CustomerService extends BaseService
+class EmployeeService extends BaseService
 {
-    public function createCustomer()
+    public function createEmployee()
     {
         try {
-            $customer = new Customer();
-            $ok = $customer->save($this->params);
-            
-            if ($ok) return "Created company successfully";
-            
+            $employee = new Employee();
+            $ok = $employee->save($this->params);
+
+            if ($ok) return "Created employee successfully";
+
             http_response_code(ResponseCode::BAD_REQUEST);
             die("Bad request");
+            
         } catch (InternalServerException $e) {
             http_response_code(ResponseCode::INTERNAL_SERVER);
             die($e->getMessage());
         }
     }
 
-    public function getCustomerById()
+    public function getEmployeeById()
     {
         try {
             
-            return Customer::find($this->params['id']);
+            return Employee::find($this->params['id']);
         } catch (RecordNotFoundException $e) {
             http_response_code(ResponseCode::NOT_FOUND);
             die($e->getMessage());
         }
     }
-    public function getAllCustomers()
+    public function getAllEmployees()
     {
-        return Customer::findAll();
+        return Employee::findAll();
     }
     
 }
